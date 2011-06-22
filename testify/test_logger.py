@@ -294,7 +294,7 @@ class TextTestLogger(TestLoggerBase):
         test_word = "test" if test_method_count == 1 else "tests"
         case_word = "case" if test_case_count == 1 else "cases"
         unexpected_failed = [result for result in failed if not result.test_method.im_class.in_suite(result.test_method, 'expected-failure')]
-        overall_success = not unexpected_failed and not unknown and not incomplete
+        overall_success = (successful or unexpected_success) and not (failed or incomplete or unknown)
 
         self.writeln('')
         status_string = self._colorize("PASSED", self.GREEN) if overall_success else self._colorize("FAILED", self.RED)
